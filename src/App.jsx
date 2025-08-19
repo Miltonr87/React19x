@@ -4,9 +4,9 @@ import { Banner } from './componentes/Banner';
 import { CardEvento } from './componentes/CardEvento';
 import { FormularioDeEvento } from './componentes/FormularioDeEvento';
 import { Tema } from './componentes/Tema';
-// no react, componentes são FUNÇÕES
 
 function App() {
+  // o estado é reativo, ou seja, quando o estado é atualizado, o componente é re-renderizado automaticamente
   const temas = [
     {
       id: 1,
@@ -35,6 +35,18 @@ function App() {
   ];
 
   const [eventos, setEventos] = useState([
+    {
+      capa: 'https://raw.githubusercontent.com/viniciosneves/tecboard-assets/refs/heads/main/imagem_1.png',
+      tema: temas[0],
+      data: new Date(),
+      titulo: 'Front-end para iniciantes',
+    },
+    {
+      capa: 'https://raw.githubusercontent.com/viniciosneves/tecboard-assets/refs/heads/main/imagem_2.png',
+      tema: temas[1],
+      data: new Date(),
+      titulo: 'Back-end para iniciantes',
+    },
     {
       capa: 'https://raw.githubusercontent.com/viniciosneves/tecboard-assets/refs/heads/main/imagem_1.png',
       tema: temas[0],
