@@ -1,27 +1,101 @@
+import { useState } from 'react';
 import './App.css';
-
-function FormularioDeEvento() {
-  return (
-    <form className="form-evento">
-      <h2>Preencha para criar um evento:</h2>
-      <fieldset>
-        <label htmlFor="nome">Qual o nome do evento?</label>
-        <input type="text" id="nome" />
-      </fieldset>
-    </form>
-  );
-}
+import { Banner } from './componentes/Banner';
+import { CardEvento } from './componentes/CardEvento';
+import { FormularioDeEvento } from './componentes/FormularioDeEvento';
+import { Tema } from './componentes/Tema';
+// no react, componentes são FUNÇÕES
 
 function App() {
+  const temas = [
+    {
+      id: 1,
+      nome: 'front-end',
+    },
+    {
+      id: 2,
+      nome: 'back-end',
+    },
+    {
+      id: 3,
+      nome: 'devops',
+    },
+    {
+      id: 4,
+      nome: 'inteligência artificial`',
+    },
+    {
+      id: 5,
+      nome: 'data science',
+    },
+    {
+      id: 6,
+      nome: 'cloud',
+    },
+  ];
+
+  const [eventos, setEventos] = useState([
+    {
+      capa: 'https://raw.githubusercontent.com/viniciosneves/tecboard-assets/refs/heads/main/imagem_1.png',
+      tema: temas[0],
+      data: new Date(),
+      titulo: 'Mulheres no Front',
+    },
+  ]);
+
+  function adicionarEvento(evento) {
+    setEventos([...eventos, evento]);
+  }
+  // renderização condicional
   return (
     <main>
       <header>
         <img src="/logo.png" alt="" />
       </header>
-      <section>
-        <img src="/banner.png" alt="" />
+      <Banner />
+      <FormularioDeEvento temas={temas} aoSubmeter={adicionarEvento} />
+      <section className="container">
+        {temas.map(function (tema) {
+          if (
+            !eventos.some(function (evento) {
+              return evento.tema.id == tema.id;
+            })
+          ) {
+            return null;
+          }
+
+          return (
+            <section key={tema.id}>
+              <Tema tema={tema} />
+              <div className="eventos">
+                {eventos
+                  .filter(function (evento) {
+                    return evento.tema.id == tema.id;
+                  })
+                  .map(function (evento, indice) {
+                    return <CardEvento evento={evento} key={indice} />;
+                  })}
+              </div>
+            </section>
+          );
+        })}
       </section>
-      <FormularioDeEvento />
+
+      {/* <section>
+        <Tema tema={temas[1]} />
+      </section>
+      <section>
+        <Tema tema={temas[2]} />
+      </section>
+      <section>
+        <Tema tema={temas[3]} />
+      </section>
+      <section>
+        <Tema tema={temas[4]} />
+      </section>
+      <section>
+        <Tema tema={temas[5]} />
+      </section> */}
     </main>
   );
 }
